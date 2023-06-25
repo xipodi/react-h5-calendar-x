@@ -1,6 +1,7 @@
 const merge = require('webpack-merge')
 const baseConf = require('./webpack.base.conf')
 const path = require('path')
+const TerserPlugin = require('terser-webpack-plugin')
 const resolve = p => path.resolve(__dirname, p)
 module.exports = merge(baseConf, {
   entry: './src/components/index',
@@ -23,5 +24,17 @@ module.exports = merge(baseConf, {
       commonjs: 'react-dom',
       amd: 'react-dom'
     }
+  },
+  optimization: {
+    minimizer: [
+      new TerserPlugin({
+        sourceMap: false,
+        terserOptions: {
+          compress: {
+            drop_console: true
+          }
+        }
+      })
+    ]
   }
 })

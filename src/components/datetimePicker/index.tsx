@@ -106,7 +106,7 @@ type State = {
   }; // 被选中的日期
 } & typeof state;
 
-class ReactHashCalendar extends React.Component<
+class ReactH5Calendar extends React.Component<
   DateTimeProps & typeof defaultProps,
   State,
   {}
@@ -507,4 +507,4 @@ class ReactHashCalendar extends React.Component<
   }
 }
 
-export default ReactHashCalendar;
+export default ReactH5Calendar;

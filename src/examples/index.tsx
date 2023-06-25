@@ -1,7 +1,7 @@
-// import { ReactHashCalendar } from '../components';
+// import { ReactH5Calendar } from '../components';
 import React from "react";
 
-const ReactHashCalendar = require("../components").ReactHashCalendar;
+const ReactH5Calendar = require("../components").ReactH5Calendar;
 
 const state = {
   isShowCalendar: false,
@@ -146,7 +146,7 @@ class Examples extends React.Component<{}, State, {}> {
         <button onClick={this.show7}>近7天</button>
         <button onClick={this.show30}>本月全部工作日</button>
         <button onClick={this.kong}>清空</button>
-        <ReactHashCalendar
+        <ReactH5Calendar
           ref={this.calendarRef}
           pickerType="date"
           disabledScroll=""
