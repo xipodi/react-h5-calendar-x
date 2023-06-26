@@ -91,9 +91,9 @@ export type DateTimeProps = {
   touchStartCallback?: (e: React.TouchEvent) => void;
   touchMoveCallback?: (e: React.TouchEvent) => void;
   touchEndCallback?: (e: React.TouchEvent) => void;
-  dateClickCallback?: (date: Date | string) => void;
+  dateClickCallback?: (date: Date | string, isSelected?: boolean) => void;
   dateConfirmCallback?: (date: Date | string) => void;
-  checkedDateOnChange?: (date: Date | string) => void;
+  checkedDateOnChange?: (dateArr: Array<Date | string>) => void;
 } & Partial<typeof defaultProps>;
 type State = {
   calendarRef?: any;
@@ -204,6 +204,7 @@ class ReactH5Calendar extends React.Component<
   clearCheckedDate = () => {
     const { calendarRef } = this.state;
     calendarRef && calendarRef.clearCheckedDate();
+    this.props.checkedDateOnChange?.([]);
   };
   today = () => {
     const { disabledDate } = this.props;
@@ -221,10 +222,15 @@ class ReactH5Calendar extends React.Component<
       return;
     }
     const { calendarRef } = this.state;
-    const { checkedDateOnChange } = this.props;
+    const { checkedDateOnChange, lang, format } = this.props;
     let arr =
       calendarRef && calendarRef.nextSomeDayCk(days, isPast, includeToday);
-    checkedDateOnChange?.(arr);
+    if (checkedDateOnChange) {
+      if (format) {
+        arr = arr.map((v) => formatDate(v, format, lang));
+      }
+      checkedDateOnChange(arr);
+    }
   };
   currentMonthChecking = (
     onlyWorkday?: boolean,
@@ -234,9 +240,54 @@ class ReactH5Calendar extends React.Component<
       return;
     }
     const { calendarRef } = this.state;
-    const { checkedDateOnChange } = this.props;
+    const { checkedDateOnChange, lang, format } = this.props;
     let arr = calendarRef && calendarRef.currentMonthCk(onlyWorkday, filterFn);
-    checkedDateOnChange?.(arr);
+    if (checkedDateOnChange) {
+      if (format) {
+        arr = arr.map((v) => formatDate(v, format, lang));
+      }
+      checkedDateOnChange(arr);
+    }
+  };
+
+  // ‘日’的点击
+  dateClick = (
+    date: IDate,
+    the_date_isChecked?: boolean,
+    checkedArr?: number[][]
+  ) => {
+    const { checkedDate } = this.state;
+    const { dateClickCallback, format, lang, checkedDateOnChange } = this.props;
+    let _checkedDate = {
+      hours: hoursNow,
+      minutes: minutesNow,
+      ...checkedDate,
+      ...date,
+    };
+
+    let fDate: Date | string = new Date(
+      `${_checkedDate.year}/${_checkedDate.month + 1}/${_checkedDate.day} ${
+        _checkedDate.hours
+      }:${_checkedDate.minutes}`
+    );
+    if (format) {
+      fDate = formatDate(fDate, format, lang);
+    }
+
+    this.setState({
+      checkedDate: _checkedDate,
+    });
+
+    dateClickCallback && dateClickCallback(fDate, the_date_isChecked);
+    if (checkedArr && checkedDateOnChange) {
+      let _checkedArr: Date[] | string[] = checkedArr.map(([y, m, d]) => {
+        return new Date(`${y}/${m + 1}/${d}`);
+      });
+      if (format) {
+        _checkedArr = _checkedArr.map((v) => formatDate(v, format, lang));
+      }
+      checkedDateOnChange(_checkedArr);
+    }
   };
 
   confirm = () => {
@@ -338,32 +389,6 @@ class ReactH5Calendar extends React.Component<
   slideChange = (direction: string) => {
     const { slideChangeCallback } = this.props;
     slideChangeCallback && slideChangeCallback(direction);
-  };
-
-  dateClick = (date: IDate) => {
-    const { checkedDate } = this.state;
-    const { dateClickCallback, format, lang } = this.props;
-    let _checkedDate = {
-      hours: hoursNow,
-      minutes: minutesNow,
-      ...checkedDate,
-      ...date,
-    };
-
-    let fDate: Date | string = new Date(
-      `${_checkedDate.year}/${_checkedDate.month + 1}/${_checkedDate.day} ${
-        _checkedDate.hours
-      }:${_checkedDate.minutes}`
-    );
-    if (format) {
-      fDate = formatDate(fDate, format, lang);
-    }
-
-    this.setState({
-      checkedDate: _checkedDate,
-    });
-
-    dateClickCallback && dateClickCallback(fDate);
   };
 
   render() {

@@ -100,8 +100,11 @@ class Examples extends React.Component<{}, State, {}> {
     this.setState({ isShowCalendar: true });
   };
 
-  dateClick = (date?: string | Date) => {
-    console.log("Examples -> dateClick -> date", date);
+  dateClick = (date?: string | Date, isSelected?: boolean) => {
+    console.log("Examples:dateClick -> date|isSelected", date, isSelected);
+  };
+  checkedDateOnChange = (date: any) => {
+    console.log("checkedDateOnChange -> date", date);
   };
 
   dateConfirm = (date?: string | Date) => {
@@ -127,9 +130,9 @@ class Examples extends React.Component<{}, State, {}> {
     current && current.currentMonthChecking(true);
   };
   kong = () => {
-    // const { current } = this.calendarRef;
-    // current && current.clearCheckedDate();
-    this.setState({ isShowWeek:true });
+    const { current } = this.calendarRef;
+    current && current.clearCheckedDate();
+    // this.setState({ isShowWeek: true });
   };
 
   render() {
@@ -161,6 +164,7 @@ class Examples extends React.Component<{}, State, {}> {
           onVisibleChange={this.handleVisibleChange}
           dateClickCallback={this.dateClick}
           dateConfirmCallback={this.dateConfirm}
+          checkedDateOnChange={this.checkedDateOnChange}
           format="YY/MM/DD"
           markDate={markDate}
           scrollChangeDate={false}

@@ -13,7 +13,7 @@
 - 支持选择近n天且符合自定义规则的日期
 - 支持点击操作来快速左右切换月份/周
 
-其他改动有：1）defaultDatetime可以为null，代表初始化选择的日期是无。 2）日期多选模式打开，则自动隐藏time的选择。3）actionSlot支持函数  4）支持顶部点击快速左右切换月份/周
+其他改动有：1）defaultDatetime可以为null，代表初始化选择的日期是无。 2）日期多选模式打开，则自动隐藏timePicker-时间选择。3）actionSlot支持函数。  4）支持顶部点击快速左右切换月份/周。
 
 # 安装使用说明
 
@@ -40,19 +40,21 @@ export default App;
 
 
 
-本库新增加（相比较于原作）有：
+本库新增加[|改动]（相比较于原作）有：
 
 
 
-| 属性                 | 说明                                         |              类型              | 默认 |
-| :------------------- | :------------------------------------------- | :----------------------------: | :--: |
-| monthTitleActionSlot | 控制日历组件顶部左右操作切换月/周的dom或文案 | Array<React.ReactNode\|string> |  -   |
-| multiple             | 是否多选                                     |            boolean             |  -   |
-| defaultDatetime      | 指定默认时间。                               |     Date\|undefined\|null      | now  |
+| 属性                 | 说明                                                         |                       类型                        | 默认 |
+| :------------------- | :----------------------------------------------------------- | :-----------------------------------------------: | :--: |
+| monthTitleActionSlot | 控制日历组件顶部左右操作切换月/周的类dom或文案               |          Array<React.ReactNode\|string>           |  -   |
+| multiple             | 是否多选                                                     |                      boolean                      |  -   |
+| defaultDatetime      | 指定默认时间。                                               |               Date\|undefined\|null               | now  |
+| dateClickCallback    | 日历被点击时调用，参数为 { date }。（返回的日期格式取决于 format 属性） | (date: Date｜string, isSelected: boolean) => void |  -   |
+| checkedDateOnChange  | 多选模式下，选中的日期发生变化时的回调，参数为所选中的日期数组—— 数组元素格式取决于 format 属性） |     (dateArr: Array<Date \| string>) => void      |  -   |
 
-实例新增两个方法：
+实例新增几个方法（都是针对“多选模式”）：
 
-（1）选中临近n天（方法内部会执行checkedDateOnChange的回调,入参是选中的日期数组）
+（1）选中临近n天（方法内部会执行checkedDateOnChange的回调）
 
 nextSomeDayChecking = (
 
@@ -63,6 +65,8 @@ nextSomeDayChecking = (
   includeToday?: boolean
 
  ) => void
+
+
 
 （2）选择以指定条件过滤后的本月的天（方法内部会执行checkedDateOnChange的回调,入参是选中的日期数组）
 
@@ -76,10 +80,18 @@ currentMonthChecking = (
 
 
 
+（3）清空所有选中日期（方法内部会执行checkedDateOnChange的回调，入参是空数组）
+
+clearCheckedDate= () => void
+
+
+
+
+
 ## Other
 
 - 如果有其他问题， 或者功能上不兼容的。可以邮件沟通 liubochinabei@163.com，或者 github 提交 issue。
 
 ## 打赏
 
-如果觉得可用，那当然好了。打赏二维码见作者头像。[抱拳] [祝美好]
+如果觉得可用，那当然好了。小小打赏的二维码见作者头像。[抱拳] [祝美好]

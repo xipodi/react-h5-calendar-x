@@ -100,7 +100,11 @@ export type CalendarProps = {
   touchStartCallback?: (e: React.TouchEvent) => void;
   touchMoveCallback?: (e: React.TouchEvent) => void;
   touchEndCallback?: (e: React.TouchEvent) => void;
-  dateClickCallback?: (date: IDate) => void;
+  dateClickCallback?: (
+    date: IDate,
+    the_date_isChecked?: boolean,
+    checkedArr?: number[][]
+  ) => void;
   daySlot?: (
     date: IDate,
     extendAttr: {
@@ -445,6 +449,7 @@ class Calendar extends React.Component<
         this.showWeek();
       }, transitionDuration * 1000);
     }
+    return retArr;
   };
 
   showWeek = (checkedDate?: any) => {
@@ -939,7 +944,7 @@ class Calendar extends React.Component<
   };
 
   clickCalendarDay = (e: React.MouseEvent, date: IDate) => {
-    console.log("555-clickCalendarDay", e, date);
+    console.log("555-clickCalendarDay", date);
     if (!date) return;
 
     if (this.formatDisabledDate(date)) return;
@@ -947,12 +952,14 @@ class Calendar extends React.Component<
     const { checkedDateArr } = this.state;
     let _checkedDateArr = [...checkedDateArr];
     const { dateClickCallback, multiple } = this.props;
+    let isChecked = false;
     if (multiple) {
       const index = this.indexOfMultipleCheckedSet([year, month, day]);
       if (index !== -1) {
         _checkedDateArr.splice(index, 1);
       } else {
         _checkedDateArr.push([year, month, day]);
+        isChecked = true;
       }
     }
     this.setState(
@@ -982,7 +989,12 @@ class Calendar extends React.Component<
       }
     );
 
-    dateClickCallback && dateClickCallback(date);
+    dateClickCallback &&
+      dateClickCallback(
+        date,
+        multiple ? isChecked : true,
+        multiple ? _checkedDateArr : undefined
+      );
   };
 
   calculateCalendarOfThreeMonth = (
