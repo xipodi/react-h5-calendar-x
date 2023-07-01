@@ -145,20 +145,24 @@ class Examples extends React.Component<{}, State, {}> {
     } = this.state;
     return (
       <div>
-        <button onClick={this.showCalendar}>显示</button>
-        <button onClick={this.show7}>近7天</button>
-        <button onClick={this.show30}>本月全部工作日</button>
-        <button onClick={this.kong}>清空</button>
+        <div>
+          <button onClick={this.showCalendar}>显示</button>
+          <button onClick={this.show7}>近7天</button>
+          <button onClick={this.show30}>本月全部工作日</button>
+          <button onClick={this.kong}>清空</button>
+        </div>
+
         <ReactH5Calendar
           ref={this.calendarRef}
           pickerType="date"
           disabledScroll=""
-          monthTitleActionSlot={[<i>lt</i>, "gt"]}
+          monthTitleActionSlot={true}
+          // monthTitleActionSlot={[<i>lt</i>, "gt"]}
           isShowWeekView={isShowWeek}
           showTodayButton={true}
-          disabledWeekView={false}
+          // disabledWeekView={true}
+          isShowAction={false}
           disabledDate={this.disabledDate}
-          isShowAction={true}
           lang="CN"
           visible={true}
           onVisibleChange={this.handleVisibleChange}
@@ -172,7 +176,7 @@ class Examples extends React.Component<{}, State, {}> {
           weekStart="Sunday"
           defaultDatetime={defaultDatetime}
           minuteStep={1}
-          multiple={true}
+          // multiple={true}
         />
       </div>
     );

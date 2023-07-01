@@ -118,7 +118,7 @@ export type CalendarProps = {
     }
   ) => React.ReactNode;
   multiple?: boolean; // 是否支持多选
-  monthTitleActionSlot?: Array<React.ReactNode | string>;
+  monthTitleActionSlot?: boolean | Array<React.ReactNode | string>;
 } & Partial<typeof defaultProps>;
 type State = {
   markDateColorObj: IObjectString;
@@ -1270,7 +1270,12 @@ class Calendar extends React.Component<
     return show ? (
       <div
         className="calendar_body"
-        style={{ marginTop: calendarTitleHeight + (multiple ? 45 : 0) + "px" }}
+        style={{
+          marginTop:
+            calendarTitleHeight +
+            (multiple || (monthTitleActionSlot ) ? 45 : 0) +
+            "px",
+        }}
       >
         <div className="adm-calendar-title">
           <a className="lt-op">

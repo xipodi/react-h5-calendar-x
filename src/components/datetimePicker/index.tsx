@@ -71,7 +71,7 @@ export type DateTimeProps = {
   lang: "CN" | "EN";
   actionSlot?: (checkedDate: any) => React.ReactNode | React.ReactNode;
   titleSlot?: (checkedDate: any) => React.ReactNode;
-  monthTitleActionSlot?: Array<React.ReactNode | string>;
+  monthTitleActionSlot?: boolean | Array<React.ReactNode | string>;
   todaySlot?: React.ReactNode;
   confirmSlot?: React.ReactNode;
   onVisibleChange?: (visible: boolean) => void;
@@ -485,13 +485,14 @@ class ReactH5Calendar extends React.Component<
 
     return isShowDatetimePicker ? (
       <div
-        className={classNames("hash-calendar", {
+        className={classNames("h5-calendar-x", {
           calendar_inline: model === "inline",
         })}
         style={{
           height: `${
             model === "inline"
-              ? calendarContentHeight + (multiple ? 45 : 0)
+              ? calendarContentHeight +
+                (multiple || monthTitleActionSlot ? 45 : 0)
               : undefined
           }px`,
         }}
@@ -499,7 +500,12 @@ class ReactH5Calendar extends React.Component<
       >
         <div
           className="calendar_content"
-          style={{ height: `${calendarContentHeight + (multiple ? 45 : 0)}px` }}
+          style={{
+            height: `${
+              calendarContentHeight +
+              (multiple || monthTitleActionSlot ? 45 : 0)
+            }px`,
+          }}
           onClick={this.stopEvent}
         >
           {isShowAction ? actionNode : null}

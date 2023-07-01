@@ -44,13 +44,13 @@ export default App;
 
 
 
-| 属性                 | 说明                                                         |                       类型                        | 默认 |
-| :------------------- | :----------------------------------------------------------- | :-----------------------------------------------: | :--: |
-| monthTitleActionSlot | 控制日历组件顶部左右操作切换月/周的类dom或文案               |          Array<React.ReactNode\|string>           |  -   |
-| multiple             | 是否多选                                                     |                      boolean                      |  -   |
-| defaultDatetime      | 指定默认时间。                                               |               Date\|undefined\|null               | now  |
-| dateClickCallback    | 日历被点击时调用，参数为 { date }。（返回的日期格式取决于 format 属性） | (date: Date｜string, isSelected: boolean) => void |  -   |
-| checkedDateOnChange  | 多选模式下，选中的日期发生变化时的回调，参数为所选中的日期数组—— 数组元素格式取决于 format 属性） |     (dateArr: Array<Date \| string>) => void      |  -   |
+| 属性                 | 说明                                                         |                          类型                          | 默认 |
+| :------------------- | :----------------------------------------------------------- | :----------------------------------------------------: | :--: |
+| monthTitleActionSlot | truely会显示日历组件顶部控件（左右点击可切换月/周），Array则显示自定义的 类dom\|文案； | boolean\| undefined \|  Array<React.ReactNode\|string> |  -   |
+| multiple             | 是否多选                                                     |                        boolean                         |  -   |
+| defaultDatetime      | 指定默认时间。                                               |                 Date\|undefined\|null                  | now  |
+| dateClickCallback    | 日历被点击时调用，参数为 { date }。（返回的日期格式取决于 format 属性） |   (date: Date｜string, isSelected: boolean) => void    |  -   |
+| checkedDateOnChange  | 多选模式下，选中的日期发生变化时的回调，参数为所选中的日期数组—— 数组元素格式取决于 format 属性） |        (dateArr: Array<Date \| string>) => void        |  -   |
 
 实例新增几个方法（都是针对“多选模式”）：
 

@@ -1,6 +1,6 @@
 {
   "name": "react-h5-calendar-x",
-  "version": "0.1.4",
+  "version": "0.1.6",
   "author": "xipodi",
   "repository": {
     "type": "git",
@@ -9,7 +9,7 @@
   "license": "MIT",
   "description": "react的h5周 月 （多选）日期（|时间）选择器",
   "main": "lib/index.js",
-  "keyword": "react-hash-calendar h5-calendar mobile-calendar multiple-date-picker datetime-picker week-picker",
+  "keywords": "react-h5-calendar h5-calendar mobile-calendar multiple-date-picker datetime-picker",
   "private": false,
   "scripts": {
     "lib": "node build/build.js",

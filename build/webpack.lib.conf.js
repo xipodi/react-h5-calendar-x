@@ -8,7 +8,7 @@ module.exports = merge(baseConf, {
   output: {
     filename: 'index.js',
     path: resolve('../lib'),
-    library: 'react-hash-calendar',
+    library: 'react-h5-calendar-x',
     libraryTarget: 'umd'
   },
   externals: {
