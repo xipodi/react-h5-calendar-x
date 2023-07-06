@@ -425,7 +425,7 @@ class Calendar extends React.Component<
       (v) => !disabledDate(v) && v.getFullYear() === yearNow
     );
     retArr = retArr.filter((v) => {
-      if (onlyWorkday && v.getDay() > 4) {
+      if (onlyWorkday && (v.getDay() > 5 || v.getDay() == 0)) {
         return false;
       }
       if (filterFn) return filterFn(v);
